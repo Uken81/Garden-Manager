@@ -1,1 +1,1 @@
-export const selectGardenObject = (state: any) => state.areas;
+export const selectGardenObject = (state: any) => state.backYard;
