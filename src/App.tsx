@@ -1,27 +1,36 @@
 import { useSelector } from 'react-redux';
-import './App.css';
+import './App.scss';
 import { selectGardenObject } from './redux/selectors';
+// import { GardenObject } from './redux/garden';
+import Areas from './components/areas';
+import { GardenObject } from './redux/garden';
 
 function App() {
-  const usersGarden = useSelector(selectGardenObject);
-  console.log('test: ', usersGarden);
+  const usersGarden: GardenObject = useSelector(selectGardenObject);
+  // console.log('test: ', usersGarden.areas);
 
-  const randomBackgroundColor = usersGarden.color.randomColor;
+  const randomNumberGenerator = Math.floor(Math.random() * 16777215).toString(16);
+  const randomBackgroundColor: string = `#${randomNumberGenerator}`;
   console.log('color', randomBackgroundColor);
 
-  const produceList = usersGarden.produce;
-  console.log(produceList);
+  const backyardProduceList = usersGarden.areas.backyard.beds.produce;
+  console.log(backyardProduceList);
 
   return (
     <div className="App">
-      <h1>Garden Manager</h1>
-      <div className="bed" style={{ backgroundColor: randomBackgroundColor }}>
-        <h1>{usersGarden.name}</h1>
+      <div className="title">
+        <h1>Garden Manager</h1>
+      </div>
+      {/* <div className="bed" style={{ backgroundColor: randomBackgroundColor }}>
+        <h1>{usersGarden.areas.backyard.beds.name}</h1>
         <ul>
-          {produceList.map((produce: string) => {
-            return <li key={produce}>{produce}</li>;
+          {backyardProduceList.map((produce) => {
+            return <li key={uniqid()}>{produce}</li>;
           })}
         </ul>
+      </div> */}
+      <div className="main-container">
+        <Areas />
       </div>
     </div>
   );
