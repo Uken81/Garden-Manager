@@ -1,10 +1,8 @@
-import gardenReducer from '../features/gardenSlice';
+import gardenReducer from '../features/garden/gardenSlice';
 import { configureStore } from '@reduxjs/toolkit';
-// import areaReducer from '../features/areaReducer';
 
 const store = configureStore({
   reducer: {
-    // area: areaReducer,
     garden: gardenReducer
   }
 });

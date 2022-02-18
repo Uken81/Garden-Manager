@@ -1,5 +1,5 @@
 import './App.scss';
-import Areas from './features/areas';
+import Garden from './features/garden/garden';
 
 function App() {
   return (
@@ -8,7 +8,7 @@ function App() {
         <h1>Garden Manager</h1>
       </div>
       <div className="main-container">
-        <Areas />
+        <Garden />
       </div>
     </div>
   );
