@@ -2,19 +2,19 @@ import { useState } from 'react';
 import { Button, Dropdown, DropdownButton, Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import uniqid from 'uniqid';
-import { addUserArea } from '../redux/garden';
+import { areaAdded } from './gardenSlice';
 
 const Areas = () => {
-  const [areaText, setAreaText] = useState('');
-  const areasList = useSelector((state) => state.gardenObject.areas);
   const dispatch = useDispatch();
+  const [areaText, setAreaText] = useState('');
+  const areasList = useSelector((state) => state.garden.areas);
 
   const handleChange = (e) => setAreaText(e.target.value);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     // dispatch({ type: 'area/areaAdded', payload: areaText });
-    dispatch(addUserArea(areaText));
+    dispatch(areaAdded(areaText));
     setAreaText('');
   };
 
@@ -22,7 +22,11 @@ const Areas = () => {
   // const testAddArea = () => {
   //   areaAdded(areaText);
   // };
-
+  const dropDown = Object.keys(areasList).map((areaName) => (
+    <Dropdown.Item href={areaName} key={uniqid()}>
+      {areaName}
+    </Dropdown.Item>
+  ));
   return (
     <div className="areas">
       <h1>Select Garden Area</h1>
@@ -42,11 +46,7 @@ const Areas = () => {
         </Button>
       </Form>
       <DropdownButton id="dropdown-basic-button" title="Garden Areas">
-        {Object.keys(areasList).map((areaName) => (
-          <Dropdown.Item href={areaName} key={uniqid()}>
-            {areaName}
-          </Dropdown.Item>
-        ))}
+        {dropDown}
       </DropdownButton>
     </div>
   );
