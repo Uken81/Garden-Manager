@@ -8,69 +8,69 @@ import Areas from '../areas/areas';
 
 const Garden = () => {
   const dispatch = useDispatch();
-  const [areaText, setAreaText] = useState('');
-  const [areaIsSelected, setAreaIsSelected] = useState(false);
-  // const [selectedArea, setSelctedArea] = useState(null);
-  const [userAddingArea, setUserAddingArea] = useState(true);
-  const [selectedAreaText, setSelectedAreaText] = useState('');
-  const areasList = useSelector((state) => state.garden.areas);
 
-  const handleChange = (e) => setAreaText(e.target.value);
+  const [showForm, setShowForm] = useState(false);
+  const [newAreaText, setnewAreaText] = useState('');
+  const [areaIsSelected, setAreaIsSelected] = useState(false);
+  const [selectedAreaText, setSelectedAreaText] = useState('');
+
+  const usersAreasList = useSelector((state) => state.garden.areas);
+
+  const handleChange = (e) => setnewAreaText(e.target.value);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(areaAdded(areaText));
-    setAreaText('');
+    dispatch(areaAdded(newAreaText));
+    setnewAreaText('');
   };
-
+  let testy;
   const handleClick = (e) => {
     e.preventDefault();
     setAreaIsSelected(true);
   };
+  const handleSelect = (e) => {
+    setSelectedAreaText(e);
+  };
 
-  const dropDown = Object.keys(areasList).map((areaName) => (
+  const dropDown = Object.keys(usersAreasList).map((areaName) => (
     //Find a more unique replacement for the eventKey value
-    <Dropdown.Item href={areaName} key={uniqid()} onClick={handleClick} eventKey={areaName}>
+    <Dropdown.Item href={areaName} key={uniqid()} eventKey={areaName} onClick={handleClick}>
       {areaName}
     </Dropdown.Item>
   ));
-
-  const showForm = () => {
-    setUserAddingArea(true);
-  };
-
-  const hideForm = () => {
-    setUserAddingArea(false);
-  };
 
   const back = () => {
     setAreaIsSelected(false);
   };
 
-  const con = (e) => {
-    setSelectedAreaText(e);
-    console.log(e);
-    console.log(selectedAreaText);
-  };
+  function con() {
+    console.log('selected area text: ', selectedAreaText);
+    console.log('Area LIst: ', usersAreasList);
+    console.log(usersAreasList[selectedAreaText]);
+    console.log('etsty: ', testy);
+  }
 
   return (
     <div className="garden">
+      <button onClick={con}>con</button>
       <h2 onClick={back}>BACK</h2>
       {!areaIsSelected && (
         <div className="select-and-add-area">
           <h1>Select Garden Area</h1>
-          <DropdownButton id="dropdown-basic-button" title="Garden Areas" onSelect={con}>
-            {dropDown}
-          </DropdownButton>
+          <Dropdown>
+            <DropdownButton id="dropdown-basic-button" title="Garden Areas" onSelect={handleSelect}>
+              {dropDown}
+            </DropdownButton>
+          </Dropdown>
           <div className="add-area">
-            {userAddingArea && (
+            {showForm && (
               <Form onSubmit={handleSubmit}>
                 <Form.Group controlId="area-form">
                   <Form.Control
                     name="area-form"
                     type="text"
                     placeholder="Enter New Area"
-                    value={areaText}
+                    value={newAreaText}
                     onChange={handleChange}
                   />
                 </Form.Group>
@@ -79,17 +79,17 @@ const Garden = () => {
                 </Button>
               </Form>
             )}
-            {!userAddingArea ? (
-              <BsFillFilePlusFill onClick={showForm} />
+            {!showForm ? (
+              <BsFillFilePlusFill onClick={() => setShowForm(true)} />
             ) : (
-              <BsFillFileMinusFill onClick={hideForm} />
+              <BsFillFileMinusFill onClick={() => setShowForm(false)} />
             )}
           </div>
         </div>
       )}
       {areaIsSelected && (
         <div className="areas">
-          <Areas />
+          <Areas selectedAreaText={selectedAreaText} />
         </div>
       )}
     </div>

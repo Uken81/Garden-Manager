@@ -3,9 +3,11 @@ import { createSlice, PayloadAction, Slice } from '@reduxjs/toolkit';
 export interface GardenObject {
   areas: {
     frontyard: {
+      name: string;
       beds: { color: {} | string; name: string; produce: string[] };
     };
     backyard: {
+      name: string;
       beds: { color: {} | string; name: string; produce: string[] };
     };
   };
@@ -14,10 +16,12 @@ export interface GardenObject {
 const initialState: GardenObject = {
   areas: {
     frontyard: {
+      name: 'frontyard',
       beds: { color: {}, name: 'a', produce: ['carrots', 'lettuce'] }
     },
     backyard: {
-      beds: { color: {}, name: 'b', produce: ['tomatoes', 'onions'] }
+      name: 'backyard',
+      beds: { color: {}, name: 'a', produce: ['tomatoes', 'onions'] }
     }
   }
 };
@@ -28,6 +32,7 @@ const gardenSlice: Slice = createSlice({
   reducers: {
     areaAdded: (state, action: PayloadAction<string>) => {
       state.areas[action.payload] = {
+        name: action.payload,
         beds: { color: {}, name: action.payload, produce: [''] }
       };
     }
