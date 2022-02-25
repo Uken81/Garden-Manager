@@ -4,14 +4,11 @@ export interface GardenObject {
   areas: {
     frontyard: {
       name: string;
-      beds: [
-        { color: {}; name: 'a'; produce: string[] },
-        { color: {}; name: 'b'; produce: string[] }
-      ];
+      beds: { color: {}; name: string; produce: string[] }[];
     };
     backyard: {
       name: string;
-      beds: [{ color: {}; name: string; produce: string[] }];
+      beds: { color: {}; name: string; produce: string[] }[];
     };
   };
 }
@@ -20,10 +17,7 @@ const initialState: GardenObject = {
   areas: {
     frontyard: {
       name: 'frontyard',
-      beds: [
-        { color: {}, name: 'a', produce: ['carrots', 'lettuce'] },
-        { color: {}, name: 'b', produce: ['cucumber', 'beans'] }
-      ]
+      beds: [{ color: {}, name: 'a', produce: ['carrots', 'lettuce'] }]
     },
     backyard: {
       name: 'backyard',

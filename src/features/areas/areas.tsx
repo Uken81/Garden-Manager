@@ -1,15 +1,16 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Button, Card, Form, ListGroup } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import uniqid from 'uniqid';
+import { RootState } from '../../redux/store';
 import { bedAdded } from '../garden/gardenSlice';
 
-const Areas = (selectedAreaText) => {
+const Areas = (selectedAreaText: string | any) => {
   const dispatch = useDispatch();
 
   const areaTitle = selectedAreaText.selectedAreaText;
 
-  const selectedArea = useSelector((state) => state.garden.areas[areaTitle]);
+  const selectedArea = useSelector((state: RootState) => state.garden.areas[areaTitle]);
   const beds = selectedArea.beds;
   console.log(selectedArea, beds);
 
@@ -22,14 +23,14 @@ const Areas = (selectedAreaText) => {
     console.log('new bed name: ', newBedText);
   };
 
-  const handleClick = (e) => {
+  const handleClick = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     setShowForm(true);
   };
 
-  const handleChange = (e) => setNewBedText(e.target.value);
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => setNewBedText(e.target.value);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(bedAdded(newBedText));
     // setNewBedText('');
@@ -58,7 +59,7 @@ const Areas = (selectedAreaText) => {
             </Form>
           )}
         </div>
-        {beds.map((bed) => (
+        {beds.map((bed: { name: string; produce: string[] }) => (
           <Card style={{ width: '18rem' }} key={uniqid()}>
             <Card.Img variant="top" src="holder.js/100px180" />
             <Card.Body>
