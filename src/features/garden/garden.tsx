@@ -1,34 +1,34 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Button, Dropdown, DropdownButton, Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import uniqid from 'uniqid';
 import { areaAdded } from './gardenSlice';
 import { BsFillFilePlusFill, BsFillFileMinusFill } from 'react-icons/bs';
 import Areas from '../areas/areas';
+import { RootState } from '../../redux/store';
 
 const Garden = () => {
   const dispatch = useDispatch();
 
   const [showForm, setShowForm] = useState(false);
-  const [newAreaText, setnewAreaText] = useState('');
+  const [newAreaText, setNewAreaText] = useState('');
   const [areaIsSelected, setAreaIsSelected] = useState(false);
   const [selectedAreaText, setSelectedAreaText] = useState('');
 
-  const usersAreasList = useSelector((state) => state.garden.areas);
+  const usersAreasList = useSelector((state: RootState) => state.garden.areas);
 
-  const handleChange = (e) => setnewAreaText(e.target.value);
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => setNewAreaText(e.target.value);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(areaAdded(newAreaText));
-    setnewAreaText('');
+    setNewAreaText('');
   };
-  let testy;
-  const handleClick = (e) => {
+  const handleClick = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     setAreaIsSelected(true);
   };
-  const handleSelect = (e) => {
+  const handleSelect = (e: React.SetStateAction<string | any>) => {
     setSelectedAreaText(e);
   };
 
@@ -47,7 +47,6 @@ const Garden = () => {
     console.log('selected area text: ', selectedAreaText);
     console.log('Area LIst: ', usersAreasList);
     console.log(usersAreasList[selectedAreaText]);
-    console.log('etsty: ', testy);
   }
 
   return (
