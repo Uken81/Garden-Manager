@@ -2,15 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { Button, Dropdown, DropdownButton, Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import uniqid from 'uniqid';
-import { areaAdded } from '../../features/gardenSlice';
+import { GardenProps, areaAdded } from '../../features/gardenSlice';
 import { BsFillFilePlusFill, BsFillFileMinusFill } from 'react-icons/bs';
 import { RootState } from '../../redux/store';
 import { AnyObject } from 'immer/dist/internal';
 
 import './garden.styles.scss';
-import { AppProps, areaSelected } from '../../features/areasSlice';
+import { areaSelected } from '../../features/areasSlice';
 
-const Garden: React.FC<AppProps> = ({
+const Garden: React.FC<GardenProps> = ({
   setAreaIsSelected,
   selectedAreaText,
   setSelectedAreaText
@@ -32,19 +32,15 @@ const Garden: React.FC<AppProps> = ({
     setNewAreaText('');
   };
 
-  const handleClick = (e: React.MouseEvent<HTMLElement>) => {
-    e.preventDefault();
-    setAreaIsSelected(true);
-  };
-
   const handleSelect = (e: React.SetStateAction<string | any>) => {
     setSelectedAreaText(e);
     console.log('setselected');
+    // setAreaIsSelected(true);
   };
 
   const dropDown = usersAreasList.map((area: any) => (
     //Find a more unique replacement for the eventKey value
-    <Dropdown.Item key={uniqid()} eventKey={area.name} onClick={handleClick}>
+    <Dropdown.Item key={uniqid()} eventKey={area.name}>
       {area.name}
     </Dropdown.Item>
   ));
@@ -54,16 +50,13 @@ const Garden: React.FC<AppProps> = ({
   }
 
   useEffect(() => {
-    findSelectedArea(usersAreasList);
-    let selectedArea = usersAreasList.find((areas: any) => findSelectedArea(areas));
-    console.log('selected area: ', selectedArea);
-    // setSelectedArea(selectedArea);
-    dispatch(areaSelected(selectedArea));
+    if (selectedAreaText !== '') {
+      findSelectedArea(usersAreasList);
+      const selectedArea = usersAreasList.find((areas: any) => findSelectedArea(areas));
+      dispatch(areaSelected(selectedArea));
+      setAreaIsSelected(true);
+    }
   }, [selectedAreaText]);
-
-  const back = () => {
-    setAreaIsSelected(false);
-  };
 
   function con() {
     console.log('Area LIst: ', usersAreasList);
@@ -75,7 +68,6 @@ const Garden: React.FC<AppProps> = ({
   return (
     <div className="garden">
       <button onClick={con}>con</button>
-      <h2 onClick={back}>BACK</h2>
       <h1>Select Garden Area</h1>
       <div className="select-and-add-area">
         <Dropdown>

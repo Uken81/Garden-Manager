@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { AreasProps } from '../../features/areasSlice';
 // import uniqid from 'uniqid';
 // import { RootState } from '../../redux/store';
 import { bedAdded } from '../../features/gardenSlice';
+import { RootState } from '../../redux/store';
 // import { RootState } from '../../redux/store';
 import './areas.scss';
 
-const Areas = (selectedAreaText: string | any) => {
+const Areas: React.FC<AreasProps> = ({ areaIsSelected, setAreaIsSelected }) => {
   const dispatch = useDispatch();
 
-  const areaTitle = selectedAreaText.selectedAreaText;
+  // const areaTitle = selectedAreaText.selectedAreaText;
 
   // const usersAreasList = useSelector((state: RootState) => state.garden.areas);
   // const beds = selectedArea.beds;
@@ -19,22 +21,11 @@ const Areas = (selectedAreaText: string | any) => {
   const [showForm, setShowForm] = useState(false);
   const [newBedText, setNewBedText] = useState('');
 
-  // function findSelectedArea(areas: any) {
-  //   return areas.name === areaTitle;
-  // }
-
-  // console.log(usersAreasList.find(findSelectedArea));
-
-  // useEffect(() => {
-  //   findSelectedArea(usersAreasList);
-  //   let test = usersAreasList.find((areas: any) => findSelectedArea(areas));
-  //   console.log('test result: ', test);
-  // }, []);
+  const selectedArea = useSelector((state: RootState) => state.selectedArea);
 
   const con2 = () => {
-    console.log('selected Area Text: ', selectedAreaText);
-    console.log('area title: ', typeof areaTitle);
-    console.log('new bed name: ', newBedText);
+    console.log('area Is Selected: ', areaIsSelected);
+    console.log('Selected Area: ', selectedArea);
   };
 
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
@@ -51,13 +42,18 @@ const Areas = (selectedAreaText: string | any) => {
     setNewBedText('');
   };
 
+  const back = () => {
+    setAreaIsSelected(false);
+  };
+
   return (
     <div className="areas">
       <div className="form-container">
+        <h2 onClick={back}>BACK</h2>
         <button onClick={con2}>con2</button>
-        <h1 className="area-title">{areaTitle}</h1>
+        {/* <h1 className="area-title">{areaTitle}</h1> */}
         <Button variant="primary" onClick={handleClick}>
-          Add New Section for {areaTitle}
+          Add New Section for
         </Button>
         {showForm && (
           <Form onSubmit={handleSubmit}>

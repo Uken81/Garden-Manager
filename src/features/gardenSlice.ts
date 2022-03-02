@@ -1,30 +1,11 @@
+import { Dispatch, SetStateAction } from 'react';
 import { createSlice, PayloadAction, Slice } from '@reduxjs/toolkit';
 
-// export interface GardenObject {
-//   areas: {
-//     frontyard: {
-//       name: string;
-//       beds: { color: {}; name: string; produce: string[] }[];
-//     };
-//     backyard: {
-//       name: string;
-//       beds: { color: {}; name: string; produce: string[] }[];
-//     };
-//   };
-// }
-
-// const initialState: GardenObject = {
-//   areas: {
-//     frontyard: {
-//       name: 'frontyard',
-//       beds: [{ color: {}, name: 'a', produce: ['carrots', 'lettuce'] }]
-//     },
-//     backyard: {
-//       name: 'backyard',
-//       beds: [{ color: {}, name: 'a', produce: ['tomatoes', 'onions'] }]
-//     }
-//   }
-// };
+export interface GardenProps {
+  setAreaIsSelected: Dispatch<SetStateAction<boolean>>;
+  selectedAreaText: string;
+  setSelectedAreaText: Dispatch<SetStateAction<string>>;
+}
 
 interface GardenState {
   areas: Area[];

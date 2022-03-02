@@ -1,9 +1,9 @@
-import { createSlice, Slice, PayloadAction } from '@reduxjs/toolkit';
 import { Dispatch, SetStateAction } from 'react';
-export interface AppProps {
+import { createSlice, Slice, PayloadAction } from '@reduxjs/toolkit';
+
+export interface AreasProps {
+  areaIsSelected: boolean;
   setAreaIsSelected: Dispatch<SetStateAction<boolean>>;
-  selectedAreaText: string;
-  setSelectedAreaText: Dispatch<SetStateAction<string>>;
 }
 
 interface areaState {

@@ -21,7 +21,7 @@ function App() {
           />
         )}
         {areaIsSelected && (
-          <Areas selectedAreaText={selectedAreaText} setSelectedAreaText={setSelectedAreaText} />
+          <Areas areaIsSelected={areaIsSelected} setAreaIsSelected={setAreaIsSelected} />
         )}
       </div>
     </div>
