@@ -1,11 +1,9 @@
 import gardenReducer from '../features/gardenSlice';
-import areasReducer from '../features/areasSlice';
 import { configureStore } from '@reduxjs/toolkit';
 
 const store = configureStore({
   reducer: {
-    garden: gardenReducer,
-    selectedArea: areasReducer
+    garden: gardenReducer
   }
 });
 

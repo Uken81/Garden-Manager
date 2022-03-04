@@ -15,13 +15,13 @@ function App() {
       <div className="main-container">
         {!areaIsSelected && (
           <Garden
-            setAreaIsSelected={setAreaIsSelected}
             selectedAreaText={selectedAreaText}
             setSelectedAreaText={setSelectedAreaText}
+            setAreaIsSelected={setAreaIsSelected}
           />
         )}
         {areaIsSelected && (
-          <Areas areaIsSelected={areaIsSelected} setAreaIsSelected={setAreaIsSelected} />
+          <Areas setAreaIsSelected={setAreaIsSelected} selectedAreaText={selectedAreaText} />
         )}
       </div>
     </div>

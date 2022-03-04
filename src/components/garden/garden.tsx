@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Button, Dropdown, DropdownButton, Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import uniqid from 'uniqid';
@@ -8,21 +8,18 @@ import { RootState } from '../../redux/store';
 import { AnyObject } from 'immer/dist/internal';
 
 import './garden.styles.scss';
-import { areaSelected } from '../../features/areasSlice';
 
 const Garden: React.FC<GardenProps> = ({
-  setAreaIsSelected,
   selectedAreaText,
-  setSelectedAreaText
+  setSelectedAreaText,
+  setAreaIsSelected
 }) => {
   const dispatch = useDispatch();
 
   const [showForm, setShowForm] = useState(false);
   const [newAreaText, setNewAreaText] = useState('');
-  // const [selectedArea, setSelectedArea] = useState(null);
 
   const usersAreasList = useSelector((state: RootState) => state.garden.areas);
-  const selectedArea = useSelector((state: RootState) => state.selectedArea);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => setNewAreaText(e.target.value);
 
@@ -32,37 +29,40 @@ const Garden: React.FC<GardenProps> = ({
     setNewAreaText('');
   };
 
+  const handleClick = (e: React.MouseEvent<HTMLElement>) => {
+    e.preventDefault();
+  };
+
   const handleSelect = (e: React.SetStateAction<string | any>) => {
     setSelectedAreaText(e);
     console.log('setselected');
-    // setAreaIsSelected(true);
+    setAreaIsSelected(true);
   };
 
-  const dropDown = usersAreasList.map((area: any) => (
-    //Find a more unique replacement for the eventKey value
-    <Dropdown.Item key={uniqid()} eventKey={area.name}>
-      {area.name}
+  const dropDown = Object.keys(usersAreasList).map((areaName) => (
+    <Dropdown.Item href={areaName} key={uniqid()} eventKey={areaName} onClick={handleClick}>
+      {areaName}
     </Dropdown.Item>
   ));
 
-  function findSelectedArea(areas: AnyObject) {
-    return areas.name === selectedAreaText;
-  }
+  // function findSelectedArea(areas: AnyObject) {
+  //   return areas.name === selectedAreaText;
+  // }
 
-  useEffect(() => {
-    if (selectedAreaText !== '') {
-      findSelectedArea(usersAreasList);
-      const selectedArea = usersAreasList.find((areas: any) => findSelectedArea(areas));
-      dispatch(areaSelected(selectedArea));
-      setAreaIsSelected(true);
-    }
-  }, [selectedAreaText]);
+  // useEffect(() => {
+  //   if (selectedAreaText !== '') {
+  //     findSelectedArea(usersAreasList);
+  //     const selectedArea = usersAreasList.find((areas: any) => findSelectedArea(areas));
+  //     console.log('testy: ', selectedArea);
+  //     dispatch(areaSelected(selectedArea));
+  //     setAreaIsSelected(true);
+  //   }
+  // }, [selectedAreaText]);
 
   function con() {
     console.log('Area LIst: ', usersAreasList);
     usersAreasList.map((area: AnyObject) => console.log(area.name));
     console.log('selectedAreaText: ', selectedAreaText);
-    console.log('selected area actual: ', selectedArea);
   }
 
   return (

@@ -3,4 +3,22 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
+  width: 20%;
+  margin-left: 2%;
+  border-right: solid 2px black;
+
+  .card-containers {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+
+  .form-container {
+    display: flex;
+    flex-direction: column;
+    justify-self: flex-end;
+    // align-self: flex-end;
+    margin-top: 30%;
+  }
 }

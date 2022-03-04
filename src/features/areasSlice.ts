@@ -1,24 +1,21 @@
 import { Dispatch, SetStateAction } from 'react';
 import { createSlice, Slice, PayloadAction } from '@reduxjs/toolkit';
+import { Area } from './gardenSlice';
 
 export interface AreasProps {
-  areaIsSelected: boolean;
   setAreaIsSelected: Dispatch<SetStateAction<boolean>>;
+  selectedAreaText: string;
 }
 
-interface areaState {
-  selectedArea: Object;
-}
-const initialState: areaState = {
-  selectedArea: {}
-};
+export interface AreaState {}
+const initialState = {};
 
 const areasSlice: Slice = createSlice({
   name: 'areas',
   initialState,
   reducers: {
-    areaSelected: (state, action: PayloadAction<areaState>) => {
-      state.selectedArea.value = action.payload;
+    areaSelected: (state, action: PayloadAction<Area>) => {
+      state.selectedAreaObject = action.payload;
     }
   }
 });

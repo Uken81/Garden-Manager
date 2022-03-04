@@ -2,13 +2,18 @@ import { Dispatch, SetStateAction } from 'react';
 import { createSlice, PayloadAction, Slice } from '@reduxjs/toolkit';
 
 export interface GardenProps {
-  setAreaIsSelected: Dispatch<SetStateAction<boolean>>;
   selectedAreaText: string;
   setSelectedAreaText: Dispatch<SetStateAction<string>>;
+  setAreaIsSelected: Dispatch<SetStateAction<boolean>>;
 }
 
 interface GardenState {
-  areas: Area[];
+  areas: {
+    frontyard: {
+      name: string;
+      beds: Beds[];
+    };
+  };
 }
 
 export interface Area {
@@ -23,7 +28,12 @@ interface Beds {
 }
 
 const initialState: GardenState = {
-  areas: [{ name: 'Backyard', beds: [{ name: 'a', color: '', produce: ['carorts', 'onions'] }] }]
+  areas: {
+    frontyard: {
+      name: 'Frontyard',
+      beds: [{ color: '', name: 'a', produce: ['carrots', 'lettuce'] }]
+    }
+  }
 };
 
 const gardenSlice: Slice = createSlice({
@@ -31,10 +41,10 @@ const gardenSlice: Slice = createSlice({
   initialState,
   reducers: {
     areaAdded: (state, action: PayloadAction<string>) => {
-      state.areas.push({
+      state.areas[action.payload] = {
         name: action.payload,
-        beds: { color: {}, name: action.payload, produce: [] }
-      });
+        beds: [{ color: {}, name: action.payload, produce: [] }]
+      };
     },
     bedAdded: (state, action: PayloadAction<string>) => {
       state.areas.frontyard.beds.push({
@@ -46,5 +56,5 @@ const gardenSlice: Slice = createSlice({
   }
 });
 
-export const { areaAdded, bedAdded } = gardenSlice.actions;
+export const { areaAdded, bedAdded, areaSelected, logger } = gardenSlice.actions;
 export default gardenSlice.reducer;
