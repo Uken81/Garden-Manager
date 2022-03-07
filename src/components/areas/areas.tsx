@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { Button, Form } from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
-import { AreasProps } from '../../features/areasSlice';
-// import uniqid from 'uniqid';
-import { bedAdded } from '../../features/gardenSlice';
+import { Button, Card, Form } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import uniqid from 'uniqid';
+import { AreasProps, bedAdded, Beds } from '../../features/gardenSlice';
+import { RootState } from '../../redux/store';
 import './areas.scss';
 
 const Areas: React.FC<AreasProps> = ({ setAreaIsSelected, selectedAreaText }) => {
@@ -14,15 +14,16 @@ const Areas: React.FC<AreasProps> = ({ setAreaIsSelected, selectedAreaText }) =>
   const [showForm, setShowForm] = useState(false);
   const [newBedText, setNewBedText] = useState('');
 
-  // const selectedArea: Area = useSelector(
-  //   (state: RootState) => state.selectedArea.selectedAreaObject
-  // );
+  const selectedArea = useSelector(
+    (state: RootState) => state.garden.areas[selectedAreaText as string]
+  );
 
-  // const beds = selectedArea.beds;
-  // const con2 = () => {
-  //   console.log('selecetedArea: ', selectedArea);
-  //   console.log('beds: ', beds);
-  // };
+  const beds: Beds = selectedArea.beds;
+  const con2 = () => {
+    console.log('selecetedArea: ', selectedArea);
+    console.log('selecetedAreaText: ', selectedAreaText);
+    console.log('beds: ', beds);
+  };
 
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
@@ -46,22 +47,23 @@ const Areas: React.FC<AreasProps> = ({ setAreaIsSelected, selectedAreaText }) =>
   return (
     <div className="areas">
       <h2 onClick={back}>BACK</h2>
+      <button onClick={con2}>con2</button>
       <h1>{selectedAreaText}</h1>
       <div className="card-container">
-        {/* {beds.map((bed: { name: string; produce: string[] }) => (
+        {Object.keys(beds).map((bed: any) => (
           <Card style={{ width: '18rem', minHeight: '12rem' }} key={uniqid()}>
             <Card.Img variant="top" src="holder.js/100px180" />
             <Card.Body>
-              <Card.Title>{bed.name}</Card.Title>
-              <ListGroup variant="flush">
-                {bed.produce.map((bed) => (
+              <Card.Title>{bed}</Card.Title>
+              {/* <ListGroup variant="flush">
+                {bed.produce.map((bed: any) => (
                   <ListGroup.Item key={uniqid()}>{bed}</ListGroup.Item>
                 ))}
-              </ListGroup>
+              </ListGroup> */}
               <Button variant="primary">Manage Bed</Button>
             </Card.Body>
           </Card>
-        ))} */}
+        ))}
       </div>
       <div className="form-container">
         {/* <h1 className="area-title">{areaTitle}</h1> */}

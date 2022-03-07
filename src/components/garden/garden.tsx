@@ -5,7 +5,6 @@ import uniqid from 'uniqid';
 import { GardenProps, areaAdded } from '../../features/gardenSlice';
 import { BsFillFilePlusFill, BsFillFileMinusFill } from 'react-icons/bs';
 import { RootState } from '../../redux/store';
-import { AnyObject } from 'immer/dist/internal';
 
 import './garden.styles.scss';
 
@@ -33,9 +32,9 @@ const Garden: React.FC<GardenProps> = ({
     e.preventDefault();
   };
 
-  const handleSelect = (e: React.SetStateAction<string | any>) => {
-    setSelectedAreaText(e);
-    console.log('setselected');
+  const handleSelect = (eventKey: string | null, e: React.SyntheticEvent<any>) => {
+    setSelectedAreaText(eventKey);
+    console.log('e: ', e);
     setAreaIsSelected(true);
   };
 
@@ -61,7 +60,6 @@ const Garden: React.FC<GardenProps> = ({
 
   function con() {
     console.log('Area LIst: ', usersAreasList);
-    usersAreasList.map((area: AnyObject) => console.log(area.name));
     console.log('selectedAreaText: ', selectedAreaText);
   }
 

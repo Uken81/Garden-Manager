@@ -2,26 +2,32 @@ import { Dispatch, SetStateAction } from 'react';
 import { createSlice, PayloadAction, Slice } from '@reduxjs/toolkit';
 
 export interface GardenProps {
-  selectedAreaText: string;
-  setSelectedAreaText: Dispatch<SetStateAction<string>>;
+  selectedAreaText: string | null;
+  setSelectedAreaText: Dispatch<SetStateAction<string | null>>;
   setAreaIsSelected: Dispatch<SetStateAction<boolean>>;
+}
+
+export interface AreasProps {
+  setAreaIsSelected: Dispatch<SetStateAction<boolean>>;
+  selectedAreaText: string | null;
+  setSelectedAreaText: Dispatch<SetStateAction<string | null>>;
 }
 
 interface GardenState {
   areas: {
     frontyard: {
       name: string;
-      beds: Beds[];
+      beds: {};
     };
   };
 }
 
 export interface Area {
   name: string;
-  beds: Beds[];
+  beds: Beds;
 }
 
-interface Beds {
+export interface Beds {
   name: string;
   color: string;
   produce: string[];
@@ -31,7 +37,13 @@ const initialState: GardenState = {
   areas: {
     frontyard: {
       name: 'Frontyard',
-      beds: [{ color: '', name: 'a', produce: ['carrots', 'lettuce'] }]
+      beds: {
+        A: {
+          color: '',
+          name: 'A',
+          produce: ['carrots', 'lettuce']
+        }
+      }
     }
   }
 };
@@ -43,18 +55,24 @@ const gardenSlice: Slice = createSlice({
     areaAdded: (state, action: PayloadAction<string>) => {
       state.areas[action.payload] = {
         name: action.payload,
-        beds: [{ color: {}, name: action.payload, produce: [] }]
+        beds: {
+          A: {
+            color: {},
+            name: 'A',
+            produce: []
+          }
+        }
       };
     },
     bedAdded: (state, action: PayloadAction<string>) => {
-      state.areas.frontyard.beds.push({
+      state.areas[action.payload].beds = {
         color: {},
         name: action.payload,
         produce: []
-      });
+      };
     }
   }
 });
 
-export const { areaAdded, bedAdded, areaSelected, logger } = gardenSlice.actions;
+export const { areaAdded, bedAdded } = gardenSlice.actions;
 export default gardenSlice.reducer;

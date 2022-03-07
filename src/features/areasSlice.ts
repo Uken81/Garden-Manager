@@ -1,11 +1,5 @@
-import { Dispatch, SetStateAction } from 'react';
 import { createSlice, Slice, PayloadAction } from '@reduxjs/toolkit';
 import { Area } from './gardenSlice';
-
-export interface AreasProps {
-  setAreaIsSelected: Dispatch<SetStateAction<boolean>>;
-  selectedAreaText: string;
-}
 
 export interface AreaState {}
 const initialState = {};
