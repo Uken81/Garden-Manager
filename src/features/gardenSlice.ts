@@ -1,11 +1,11 @@
 import { Dispatch, SetStateAction } from 'react';
 import { createSlice, PayloadAction, Slice } from '@reduxjs/toolkit';
 
-export interface AppProps {
+export type AppProps = {
   selectedAreaText: string | null;
   setSelectedAreaText: Dispatch<SetStateAction<string | null>>;
   setAreaIsSelected: Dispatch<SetStateAction<boolean>>;
-}
+};
 
 interface GardenState {
   areas: {
@@ -36,6 +36,11 @@ const initialState: GardenState = {
           color: '',
           name: 'A',
           produce: ['carrots', 'lettuce']
+        },
+        B: {
+          color: '',
+          name: 'B',
+          produce: ['onion', 'tomatoe']
         }
       }
     }
