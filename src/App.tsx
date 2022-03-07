@@ -4,7 +4,7 @@ import Areas from './components/areas/areas';
 import Garden from './components/garden/garden';
 
 function App() {
-  const [areaIsSelected, setAreaIsSelected] = useState(false);
+  const [areaIsSelected, setAreaIsSelected] = useState<boolean>(false);
   const [selectedAreaText, setSelectedAreaText] = useState<string | null>('');
 
   return (

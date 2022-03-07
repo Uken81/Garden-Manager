@@ -1,16 +1,10 @@
 import { Dispatch, SetStateAction } from 'react';
 import { createSlice, PayloadAction, Slice } from '@reduxjs/toolkit';
 
-export interface GardenProps {
+export interface AppProps {
   selectedAreaText: string | null;
   setSelectedAreaText: Dispatch<SetStateAction<string | null>>;
   setAreaIsSelected: Dispatch<SetStateAction<boolean>>;
-}
-
-export interface AreasProps {
-  setAreaIsSelected: Dispatch<SetStateAction<boolean>>;
-  selectedAreaText: string | null;
-  setSelectedAreaText: Dispatch<SetStateAction<string | null>>;
 }
 
 interface GardenState {

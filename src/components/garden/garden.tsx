@@ -2,21 +2,21 @@ import React, { useState } from 'react';
 import { Button, Dropdown, DropdownButton, Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import uniqid from 'uniqid';
-import { GardenProps, areaAdded } from '../../features/gardenSlice';
+import { areaAdded, AppProps } from '../../features/gardenSlice';
 import { BsFillFilePlusFill, BsFillFileMinusFill } from 'react-icons/bs';
 import { RootState } from '../../redux/store';
 
 import './garden.styles.scss';
 
-const Garden: React.FC<GardenProps> = ({
+const Garden: React.FC<AppProps> = ({
   selectedAreaText,
   setSelectedAreaText,
   setAreaIsSelected
 }) => {
   const dispatch = useDispatch();
 
-  const [showForm, setShowForm] = useState(false);
-  const [newAreaText, setNewAreaText] = useState('');
+  const [showForm, setShowForm] = useState<boolean>(false);
+  const [newAreaText, setNewAreaText] = useState<string>('');
 
   const usersAreasList = useSelector((state: RootState) => state.garden.areas);
 

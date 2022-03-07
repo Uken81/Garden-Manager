@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { Button, Card, Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import uniqid from 'uniqid';
-import { AreasProps, bedAdded, Beds } from '../../features/gardenSlice';
+import { AppProps, bedAdded, Beds } from '../../features/gardenSlice';
 import { RootState } from '../../redux/store';
 import './areas.scss';
 
-const Areas: React.FC<AreasProps> = ({ setAreaIsSelected, selectedAreaText }) => {
+const Areas: React.FC<AppProps> = ({ setAreaIsSelected, selectedAreaText }) => {
   const dispatch = useDispatch();
 
   // const usersAreasList = useSelector((state: RootState) => state.garden.areas);
@@ -23,6 +23,7 @@ const Areas: React.FC<AreasProps> = ({ setAreaIsSelected, selectedAreaText }) =>
     console.log('selecetedArea: ', selectedArea);
     console.log('selecetedAreaText: ', selectedAreaText);
     console.log('beds: ', beds);
+    console.log('beds: ', beds.produce);
   };
 
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
@@ -50,7 +51,7 @@ const Areas: React.FC<AreasProps> = ({ setAreaIsSelected, selectedAreaText }) =>
       <button onClick={con2}>con2</button>
       <h1>{selectedAreaText}</h1>
       <div className="card-container">
-        {Object.keys(beds).map((bed: any) => (
+        {Object.keys(beds).map((bed: string) => (
           <Card style={{ width: '18rem', minHeight: '12rem' }} key={uniqid()}>
             <Card.Img variant="top" src="holder.js/100px180" />
             <Card.Body>
