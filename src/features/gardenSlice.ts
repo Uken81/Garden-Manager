@@ -32,14 +32,14 @@ const initialState: GardenState = {
     frontyard: {
       name: 'Frontyard',
       beds: {
-        A: {
+        a: {
           color: '',
-          name: 'A',
+          name: 'a',
           produce: ['carrots', 'lettuce']
         },
-        B: {
+        b: {
           color: '',
-          name: 'B',
+          name: 'b',
           produce: ['onion', 'tomatoe']
         }
       }
@@ -58,9 +58,9 @@ const gardenSlice: Slice = createSlice({
       state.areas[action.payload] = {
         name: action.payload,
         beds: {
-          A: {
+          a: {
             color: {},
-            name: 'A',
+            name: 'a',
             produce: []
           }
         }

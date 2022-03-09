@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import uniqid from 'uniqid';
 import { AppProps, bedAdded } from '../../features/gardenSlice';
 import { RootState } from '../../redux/store';
+import capitalise from '../shared/capitalise';
 import './areas.scss';
 
 const Areas: React.FC<AppProps> = ({ setAreaIsSelected }) => {
@@ -44,7 +45,7 @@ const Areas: React.FC<AppProps> = ({ setAreaIsSelected }) => {
     <Card style={{ width: '18rem', minHeight: '12rem' }} key={uniqid()}>
       <Card.Img variant="top" src="holder.js/100px180" />
       <Card.Body>
-        <Card.Title>{bed.name}</Card.Title>
+        <Card.Title>{capitalise(bed.name)}</Card.Title>
         <ListGroup variant="flush">
           {bed.produce.map((bed: any) => (
             <ListGroup.Item key={uniqid()}>{bed}</ListGroup.Item>

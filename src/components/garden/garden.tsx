@@ -7,6 +7,7 @@ import { BsFillFilePlusFill, BsFillFileMinusFill } from 'react-icons/bs';
 import { RootState } from '../../redux/store';
 
 import './garden.styles.scss';
+import capitalise from '../shared/capitalise';
 
 const Garden: React.FC<AppProps> = ({ setAreaIsSelected }) => {
   const dispatch = useDispatch();
@@ -35,7 +36,7 @@ const Garden: React.FC<AppProps> = ({ setAreaIsSelected }) => {
 
   const dropDown = Object.keys(usersAreasList).map((areaName) => (
     <Dropdown.Item href={areaName} key={uniqid()} eventKey={areaName} onClick={handleClick}>
-      {areaName}
+      {capitalise(areaName)}
     </Dropdown.Item>
   ));
 
@@ -55,6 +56,7 @@ const Garden: React.FC<AppProps> = ({ setAreaIsSelected }) => {
 
   function con() {
     console.log('Area LIst: ', usersAreasList);
+    console.log('newAreaText: ', newAreaText);
   }
 
   return (
