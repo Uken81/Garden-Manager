@@ -6,24 +6,20 @@ import { AppProps, bedAdded } from '../../features/gardenSlice';
 import { RootState } from '../../redux/store';
 import './areas.scss';
 
-const Areas: React.FC<AppProps> = ({ setAreaIsSelected, selectedAreaText }) => {
+const Areas: React.FC<AppProps> = ({ setAreaIsSelected }) => {
   const dispatch = useDispatch();
-
-  // const usersAreasList = useSelector((state: RootState) => state.garden.areas);
 
   const [showForm, setShowForm] = useState(false);
   const [newBedText, setNewBedText] = useState('');
 
-  const selectedArea = useSelector(
-    (state: RootState) => state.garden.areas[selectedAreaText as string]
+  const selectedAreaText = useSelector((state: RootState) => state.garden.selectedAreaName);
+  const selectedAreasBeds = useSelector(
+    (state: RootState) => state.garden.areas[selectedAreaText as string].beds
   );
-  //replace type Beds
-  const beds = selectedArea.beds;
+
   const con2 = () => {
-    console.log('selecetedArea: ', selectedArea);
+    console.log('selecetedArea: ', selectedAreasBeds);
     console.log('selecetedAreaText: ', selectedAreaText);
-    console.log('beds: ', beds);
-    console.log('beds: ', beds.produce);
   };
 
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
@@ -38,14 +34,13 @@ const Areas: React.FC<AppProps> = ({ setAreaIsSelected, selectedAreaText }) => {
     dispatch(bedAdded(newBedText));
     setShowForm(false);
     setNewBedText('');
-    console.log('test submit');
   };
 
   const back = () => {
     setAreaIsSelected(false);
   };
 
-  const gardenBedCard = Object.values(beds).map((bed: any) => (
+  const gardenBedCard = Object.values(selectedAreasBeds).map((bed: any) => (
     <Card style={{ width: '18rem', minHeight: '12rem' }} key={uniqid()}>
       <Card.Img variant="top" src="holder.js/100px180" />
       <Card.Body>
@@ -67,9 +62,8 @@ const Areas: React.FC<AppProps> = ({ setAreaIsSelected, selectedAreaText }) => {
       <h1>{selectedAreaText}</h1>
       <div className="card-container">{gardenBedCard}</div>
       <div className="form-container">
-        {/* <h1 className="area-title">{areaTitle}</h1> */}
         <Button variant="primary" onClick={handleClick}>
-          Add New Section for
+          Add New Bed
         </Button>
         {showForm && (
           <Form onSubmit={handleSubmit}>

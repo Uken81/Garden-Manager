@@ -2,17 +2,13 @@ import React, { useState } from 'react';
 import { Button, Dropdown, DropdownButton, Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import uniqid from 'uniqid';
-import { areaAdded, AppProps } from '../../features/gardenSlice';
+import { areaAdded, AppProps, areaSelected } from '../../features/gardenSlice';
 import { BsFillFilePlusFill, BsFillFileMinusFill } from 'react-icons/bs';
 import { RootState } from '../../redux/store';
 
 import './garden.styles.scss';
 
-const Garden: React.FC<AppProps> = ({
-  selectedAreaText,
-  setSelectedAreaText,
-  setAreaIsSelected
-}) => {
+const Garden: React.FC<AppProps> = ({ setAreaIsSelected }) => {
   const dispatch = useDispatch();
 
   const [showForm, setShowForm] = useState<boolean>(false);
@@ -32,9 +28,8 @@ const Garden: React.FC<AppProps> = ({
     e.preventDefault();
   };
 
-  const handleSelect = (eventKey: string | null, e: React.SyntheticEvent<any>) => {
-    setSelectedAreaText(eventKey);
-    console.log('e: ', e);
+  const handleSelect = (eventKey: string | null) => {
+    dispatch(areaSelected(eventKey));
     setAreaIsSelected(true);
   };
 
@@ -60,7 +55,6 @@ const Garden: React.FC<AppProps> = ({
 
   function con() {
     console.log('Area LIst: ', usersAreasList);
-    console.log('selectedAreaText: ', selectedAreaText);
   }
 
   return (

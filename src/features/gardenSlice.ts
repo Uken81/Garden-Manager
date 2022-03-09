@@ -2,12 +2,11 @@ import { Dispatch, SetStateAction } from 'react';
 import { createSlice, PayloadAction, Slice } from '@reduxjs/toolkit';
 
 export type AppProps = {
-  selectedAreaText: string | null;
-  setSelectedAreaText: Dispatch<SetStateAction<string | null>>;
   setAreaIsSelected: Dispatch<SetStateAction<boolean>>;
 };
 
 interface GardenState {
+  selectedAreaName: string;
   areas: {
     frontyard: {
       name: string;
@@ -28,6 +27,7 @@ export interface Beds {
 }
 
 const initialState: GardenState = {
+  selectedAreaName: '',
   areas: {
     frontyard: {
       name: 'Frontyard',
@@ -51,6 +51,9 @@ const gardenSlice: Slice = createSlice({
   name: 'garden',
   initialState,
   reducers: {
+    areaSelected: (state, action: PayloadAction<string>) => {
+      state.selectedAreaName = action.payload;
+    },
     areaAdded: (state, action: PayloadAction<string>) => {
       state.areas[action.payload] = {
         name: action.payload,
@@ -64,7 +67,7 @@ const gardenSlice: Slice = createSlice({
       };
     },
     bedAdded: (state, action: PayloadAction<string>) => {
-      state.areas[action.payload].beds = {
+      state.areas[state.selectedAreaName].beds[action.payload] = {
         color: {},
         name: action.payload,
         produce: []
@@ -73,5 +76,5 @@ const gardenSlice: Slice = createSlice({
   }
 });
 
-export const { areaAdded, bedAdded } = gardenSlice.actions;
+export const { areaSelected, areaAdded, bedAdded } = gardenSlice.actions;
 export default gardenSlice.reducer;

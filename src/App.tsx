@@ -5,7 +5,6 @@ import Garden from './components/garden/garden';
 
 function App() {
   const [areaIsSelected, setAreaIsSelected] = useState<boolean>(false);
-  const [selectedAreaText, setSelectedAreaText] = useState<string | null>('');
 
   return (
     <div className="App">
@@ -13,20 +12,8 @@ function App() {
         <h1>Garden Manager</h1>
       </div>
       <div className="main-container">
-        {!areaIsSelected && (
-          <Garden
-            selectedAreaText={selectedAreaText}
-            setSelectedAreaText={setSelectedAreaText}
-            setAreaIsSelected={setAreaIsSelected}
-          />
-        )}
-        {areaIsSelected && (
-          <Areas
-            setAreaIsSelected={setAreaIsSelected}
-            selectedAreaText={selectedAreaText}
-            setSelectedAreaText={setSelectedAreaText}
-          />
-        )}
+        {!areaIsSelected && <Garden setAreaIsSelected={setAreaIsSelected} />}
+        {areaIsSelected && <Areas setAreaIsSelected={setAreaIsSelected} />}
       </div>
     </div>
   );
