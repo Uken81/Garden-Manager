@@ -5,6 +5,11 @@ export type AppProps = {
   setAreaIsSelected: Dispatch<SetStateAction<boolean>>;
 };
 
+export type AreasProps = {
+  setAreaIsSelected: Dispatch<SetStateAction<boolean>>;
+  setShowBedManaagement: Dispatch<SetStateAction<boolean>>;
+};
+
 interface GardenState {
   selectedAreaName: string;
   areas: {
@@ -30,7 +35,7 @@ const initialState: GardenState = {
   selectedAreaName: '',
   areas: {
     frontyard: {
-      name: 'Frontyard',
+      name: 'frontyard',
       beds: {
         a: {
           color: '',

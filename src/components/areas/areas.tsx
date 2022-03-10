@@ -2,16 +2,17 @@ import React, { useState } from 'react';
 import { Button, Card, Form, ListGroup } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import uniqid from 'uniqid';
-import { AppProps, bedAdded } from '../../features/gardenSlice';
+import { AreasProps, bedAdded } from '../../features/gardenSlice';
 import { RootState } from '../../redux/store';
 import capitalise from '../shared/capitalise';
 import './areas.scss';
 
-const Areas: React.FC<AppProps> = ({ setAreaIsSelected }) => {
+const Areas: React.FC<AreasProps> = ({ setAreaIsSelected, setShowBedManaagement }) => {
   const dispatch = useDispatch();
 
   const [showForm, setShowForm] = useState(false);
   const [newBedText, setNewBedText] = useState('');
+  const [selectedBed, setSelectedBed] = useState('');
 
   const selectedAreaText = useSelector((state: RootState) => state.garden.selectedAreaName);
   const selectedAreasBeds = useSelector(
@@ -21,14 +22,13 @@ const Areas: React.FC<AppProps> = ({ setAreaIsSelected }) => {
   const con2 = () => {
     console.log('selecetedArea: ', selectedAreasBeds);
     console.log('selecetedAreaText: ', selectedAreaText);
+    console.log('selecetedBed: ', selectedBed);
   };
 
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     setShowForm(true);
   };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => setNewBedText(e.target.value);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -39,6 +39,13 @@ const Areas: React.FC<AppProps> = ({ setAreaIsSelected }) => {
 
   const back = () => {
     setAreaIsSelected(false);
+    setShowBedManaagement(false);
+  };
+
+  const manageBed = (e: React.MouseEvent<HTMLElement>, bedName: string) => {
+    e.preventDefault();
+    setSelectedBed(bedName);
+    setShowBedManaagement(true);
   };
 
   const gardenBedCard = Object.values(selectedAreasBeds).map((bed: any) => (
@@ -51,7 +58,9 @@ const Areas: React.FC<AppProps> = ({ setAreaIsSelected }) => {
             <ListGroup.Item key={uniqid()}>{bed}</ListGroup.Item>
           ))}
         </ListGroup>
-        <Button variant="primary">Manage Bed</Button>
+        <Button variant="primary" onClick={(e) => manageBed(e, bed.name)}>
+          Manage Bed
+        </Button>
       </Card.Body>
     </Card>
   ));
@@ -73,7 +82,7 @@ const Areas: React.FC<AppProps> = ({ setAreaIsSelected }) => {
                 type="text"
                 placeholder="Name new bed"
                 value={newBedText}
-                onChange={handleChange}
+                onChange={(e) => setNewBedText(e.target.value)}
               />
             </Form.Group>
           </Form>

@@ -5,6 +5,7 @@ import Garden from './components/garden/garden';
 
 function App() {
   const [areaIsSelected, setAreaIsSelected] = useState<boolean>(false);
+  const [showBedManagement, setShowBedManagement] = useState<boolean>(false);
 
   return (
     <div className="App">
@@ -13,7 +14,17 @@ function App() {
       </div>
       <div className="main-container">
         {!areaIsSelected && <Garden setAreaIsSelected={setAreaIsSelected} />}
-        {areaIsSelected && <Areas setAreaIsSelected={setAreaIsSelected} />}
+        {areaIsSelected && (
+          <Areas
+            setAreaIsSelected={setAreaIsSelected}
+            setShowBedManaagement={setShowBedManagement}
+          />
+        )}
+        {showBedManagement && (
+          <div className="bed-management">
+            <p>Bed Management</p>
+          </div>
+        )}
       </div>
     </div>
   );
