@@ -1,28 +1,34 @@
-import React, { useState } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import { Button, Card, Form, ListGroup } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import uniqid from 'uniqid';
-import { AreasProps, bedAdded } from '../../features/gardenSlice';
+import { bedAdded } from '../../features/gardenSlice';
 import { RootState } from '../../redux/store';
 import capitalise from '../shared/capitalise';
+import { createBedsList } from '../shared/lists';
 import './areas.scss';
 
-const Areas: React.FC<AreasProps> = ({ setAreaIsSelected, setShowBedManaagement }) => {
+type AreasProps = {
+  setAreaIsSelected: Dispatch<SetStateAction<boolean>>;
+  setShowBedManagement: Dispatch<SetStateAction<boolean>>;
+  setSelectedBed: Dispatch<SetStateAction<string>>;
+};
+
+const Areas: React.FC<AreasProps> = ({
+  setAreaIsSelected,
+  setShowBedManagement,
+  setSelectedBed
+}) => {
   const dispatch = useDispatch();
 
   const [showForm, setShowForm] = useState(false);
   const [newBedText, setNewBedText] = useState('');
-  const [selectedBed, setSelectedBed] = useState('');
 
   const selectedAreaText = useSelector((state: RootState) => state.garden.selectedAreaName);
-  const selectedAreasBeds = useSelector(
-    (state: RootState) => state.garden.areas[selectedAreaText as string].beds
-  );
+  const selectedAreasBeds = createBedsList();
 
   const con2 = () => {
     console.log('selecetedArea: ', selectedAreasBeds);
-    console.log('selecetedAreaText: ', selectedAreaText);
-    console.log('selecetedBed: ', selectedBed);
   };
 
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
@@ -39,13 +45,13 @@ const Areas: React.FC<AreasProps> = ({ setAreaIsSelected, setShowBedManaagement 
 
   const back = () => {
     setAreaIsSelected(false);
-    setShowBedManaagement(false);
+    setShowBedManagement(false);
   };
 
   const manageBed = (e: React.MouseEvent<HTMLElement>, bedName: string) => {
     e.preventDefault();
     setSelectedBed(bedName);
-    setShowBedManaagement(true);
+    setShowBedManagement(true);
   };
 
   const gardenBedCard = Object.values(selectedAreasBeds).map((bed: any) => (
@@ -69,7 +75,7 @@ const Areas: React.FC<AreasProps> = ({ setAreaIsSelected, setShowBedManaagement 
     <div className="areas">
       <h2 onClick={back}>BACK</h2>
       <button onClick={con2}>con2</button>
-      <h1>{selectedAreaText}</h1>
+      <h1>{capitalise(selectedAreaText)}</h1>
       <div className="card-container">{gardenBedCard}</div>
       <div className="form-container">
         <Button variant="primary" onClick={handleClick}>

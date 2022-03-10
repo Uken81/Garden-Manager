@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import './App.scss';
 import Areas from './components/areas/areas';
+import BedMangement from './components/bedManagement/bedManagement';
 import Garden from './components/garden/garden';
 
 function App() {
   const [areaIsSelected, setAreaIsSelected] = useState<boolean>(false);
   const [showBedManagement, setShowBedManagement] = useState<boolean>(false);
+  const [selectedBed, setSelectedBed] = useState<string>('');
 
   return (
     <div className="App">
@@ -17,14 +19,11 @@ function App() {
         {areaIsSelected && (
           <Areas
             setAreaIsSelected={setAreaIsSelected}
-            setShowBedManaagement={setShowBedManagement}
+            setShowBedManagement={setShowBedManagement}
+            setSelectedBed={setSelectedBed}
           />
         )}
-        {showBedManagement && (
-          <div className="bed-management">
-            <p>Bed Management</p>
-          </div>
-        )}
+        {showBedManagement && <BedMangement selectedBed={selectedBed} />}
       </div>
     </div>
   );
