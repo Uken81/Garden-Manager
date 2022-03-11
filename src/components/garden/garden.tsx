@@ -2,14 +2,15 @@ import React, { useState } from 'react';
 import { Button, Dropdown, DropdownButton, Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import uniqid from 'uniqid';
-import { areaAdded, AppProps, areaSelected } from '../../features/gardenSlice';
+import { areaAdded, areaSelected } from '../../features/gardenSlice';
 import { BsFillFilePlusFill, BsFillFileMinusFill } from 'react-icons/bs';
 import { RootState } from '../../redux/store';
 
 import './garden.styles.scss';
 import capitalise from '../shared/capitalise';
+import { Link } from 'react-router-dom';
 
-const Garden: React.FC<AppProps> = ({ setAreaIsSelected }) => {
+const Garden: React.FC = () => {
   const dispatch = useDispatch();
 
   const [showForm, setShowForm] = useState<boolean>(false);
@@ -31,12 +32,13 @@ const Garden: React.FC<AppProps> = ({ setAreaIsSelected }) => {
 
   const handleSelect = (eventKey: string | null) => {
     dispatch(areaSelected(eventKey));
-    setAreaIsSelected(true);
   };
 
   const dropDown = Object.keys(usersAreasList).map((areaName) => (
-    <Dropdown.Item href={areaName} key={uniqid()} eventKey={areaName} onClick={handleClick}>
-      {capitalise(areaName)}
+    <Dropdown.Item key={uniqid()} eventKey={areaName} onClick={handleClick}>
+      <Link key={uniqid()} to={'/areas'}>
+        {capitalise(areaName)}
+      </Link>
     </Dropdown.Item>
   ));
 
@@ -55,8 +57,7 @@ const Garden: React.FC<AppProps> = ({ setAreaIsSelected }) => {
   // }, [selectedAreaText]);
 
   function con() {
-    console.log('Area LIst: ', usersAreasList);
-    console.log('newAreaText: ', newAreaText);
+    console.log(usersAreasList);
   }
 
   return (
@@ -93,6 +94,9 @@ const Garden: React.FC<AppProps> = ({ setAreaIsSelected }) => {
           )}
         </div>
       </div>
+      <Link to={'/areas'}>
+        <button>Areas Link</button>
+      </Link>
     </div>
   );
 };

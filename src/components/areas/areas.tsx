@@ -1,26 +1,19 @@
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import React, { useState } from 'react';
 import { Button, Card, Form, ListGroup } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import uniqid from 'uniqid';
 import { bedAdded } from '../../features/gardenSlice';
 import { RootState } from '../../redux/store';
+import BedMangement from '../bedManagement/bedManagement';
 import capitalise from '../shared/capitalise';
 import { createBedsList } from '../shared/lists';
 import './areas.scss';
 
-type AreasProps = {
-  setAreaIsSelected: Dispatch<SetStateAction<boolean>>;
-  setShowBedManagement: Dispatch<SetStateAction<boolean>>;
-  setSelectedBed: Dispatch<SetStateAction<string>>;
-};
-
-const Areas: React.FC<AreasProps> = ({
-  setAreaIsSelected,
-  setShowBedManagement,
-  setSelectedBed
-}) => {
+const Areas: React.FC = () => {
   const dispatch = useDispatch();
 
+  const [showBedManagement, setShowBedManagement] = useState<boolean>(false);
+  const [selectedBed, setSelectedBed] = useState<string>('');
   const [showForm, setShowForm] = useState(false);
   const [newBedText, setNewBedText] = useState('');
 
@@ -44,7 +37,6 @@ const Areas: React.FC<AreasProps> = ({
   };
 
   const back = () => {
-    setAreaIsSelected(false);
     setShowBedManagement(false);
   };
 
@@ -72,7 +64,7 @@ const Areas: React.FC<AreasProps> = ({
   ));
 
   return (
-    <div className="areas">
+    <div className="areas-management">
       <h2 onClick={back}>BACK</h2>
       <button onClick={con2}>con2</button>
       <h1>{capitalise(selectedAreaText)}</h1>
@@ -93,6 +85,9 @@ const Areas: React.FC<AreasProps> = ({
             </Form.Group>
           </Form>
         )}
+      </div>
+      <div className="bed-management">
+        {showBedManagement && <BedMangement selectedBed={selectedBed} />}
       </div>
     </div>
   );

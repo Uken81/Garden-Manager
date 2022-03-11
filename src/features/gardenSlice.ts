@@ -1,9 +1,4 @@
-import { Dispatch, SetStateAction } from 'react';
 import { createSlice, PayloadAction, Slice } from '@reduxjs/toolkit';
-
-export type AppProps = {
-  setAreaIsSelected: Dispatch<SetStateAction<boolean>>;
-};
 
 interface GardenState {
   selectedAreaName: string;
